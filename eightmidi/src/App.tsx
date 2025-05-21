@@ -1,7 +1,13 @@
 import './App.css'
+import MusicStaff from './components/MusicStaff'
+import MusicNote from './components/MusicNote'
 
 function App() {
-  return <div></div>
+  return <>
+  <MusicStaff/>
+  <MusicNote/>
+  </>
+  
 }
 
 export default App
