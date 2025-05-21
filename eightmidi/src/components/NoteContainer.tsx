@@ -1,7 +1,10 @@
+type NoteContainerProps = {
+    children?: React.ReactNode;
+}
 
-function NoteContainer() {
+function NoteContainer({children} : NoteContainerProps) {
     return <>
-      <div className="noteContainer"></div>
+      <div className="noteContainer">{children}</div>
     </>
 }
 
