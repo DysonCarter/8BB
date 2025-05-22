@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type NoteContainerProps = {
     children?: React.ReactNode;
@@ -7,14 +7,18 @@ type NoteContainerProps = {
 function NoteContainer({children} : NoteContainerProps) {
 
     const [noteActive, setNoteActive] = useState<boolean>(false);
+    const divRef = useRef<HTMLDivElement>(null);
 
     function handleNoteClick() {
-        alert(`Clicked ${children}, note active = ${!noteActive}`);
+        //toggle color:
+        if(divRef.current){
+            divRef.current.style.backgroundColor = noteActive ? "rgb(198, 188, 137)" : "green"
+        }
         setNoteActive(!noteActive);
     }
 
     return <>
-      <div className="noteContainer" onClick={handleNoteClick}>{children}</div>
+      <div className="noteContainer" ref={divRef} onClick={handleNoteClick}>{children}</div>
     </>
 }
 
