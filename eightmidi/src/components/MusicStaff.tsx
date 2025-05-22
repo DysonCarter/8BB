@@ -5,10 +5,10 @@ const COLS = 32;
 const ROWS = 16
 
 function MusicStaff() {
-    const [activeIndices, setActiveIdices] = useState<number[]>(Array(COLS).fill(ROWS-1))
+    const [activeIndices, setActiveIndices] = useState<number[]>(Array(COLS).fill(ROWS-1))
 
     const handleNoteClick = (row: number, column: number) => {
-        setActiveIdices((prev) => {
+        setActiveIndices((prev) => {
             const newActive = [...prev];
             newActive[column] = row;
             return newActive;
