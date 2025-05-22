@@ -1,11 +1,11 @@
 :root {
-  --ROWS: 9;
+  --ROWS: 16;
   --COLS: 32;
 }
 
 .musicGrid {
   background-color: rgb(198, 188, 137);
-  height: 400px;
+  height: 500px;
   width: 1600px;
   display: grid;
   grid-template-columns: repeat(var(--COLS),1fr);

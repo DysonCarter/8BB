@@ -2,7 +2,7 @@ import NoteContainer from "./NoteContainer"
 import { useState } from "react";
 
 const COLS = 32;
-const ROWS = 9
+const ROWS = 16
 
 function MusicStaff() {
     const [activeIndices, setActiveIdices] = useState<number[]>(Array(COLS).fill(ROWS-1))
@@ -33,10 +33,15 @@ function MusicStaff() {
         }
     }
 
+    let active_string = ""
+    for(let i in activeIndices)
+        active_string += `${activeIndices[i]}, `
+
     return <>
     <div className="musicGrid">
         {noteContainers}
     </div>
+    <p>{active_string}</p>
     </>
 }
 
