@@ -1,3 +1,4 @@
+import IndicesToAudioConverter from "./IndicesToAudioConverter";
 import NoteContainer from "./NoteContainer"
 import { useState } from "react";
 
@@ -34,14 +35,17 @@ function MusicStaff() {
     }
 
     let active_string = ""
-    for(let i in activeIndices)
-        active_string += `${activeIndices[i]}, `
+    let indexArray = []
+    for(let i in activeIndices){
+        active_string += `${activeIndices[i]}, `;
+        indexArray.push(activeIndices[i]);
+    }
 
     return <>
     <div className="musicGrid">
         {noteContainers}
     </div>
-    <p>{active_string}</p>
+    <IndicesToAudioConverter indexArray={indexArray}/>
     </>
 }
 

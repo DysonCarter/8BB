@@ -1,5 +1,4 @@
 
-
 type NoteContainerProps = {
     children?: React.ReactNode;
     active?: boolean;
