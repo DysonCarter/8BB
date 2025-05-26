@@ -49,4 +49,4 @@ function MusicStaff() {
     </>
 }
 
-export default MusicStaff
+export default MusicStaff;
