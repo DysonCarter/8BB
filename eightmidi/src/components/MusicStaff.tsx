@@ -3,7 +3,7 @@ import NoteContainer from "./NoteContainer";
 import { useState, useRef, useEffect } from "react";
 import * as Tone from "tone";
 
-const COLS = 32;
+const COLS = 50;
 const ROWS = 16;
 
 // Build indexDictionary with notes
@@ -62,7 +62,7 @@ function MusicStaff() {
             handleNoteClick(row, column);
           }}
         >
-          {/*index*/}
+          {indexDictionary[row]}
         </NoteContainer>
       );
     }
