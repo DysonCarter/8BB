@@ -73,9 +73,10 @@ function parseIndexArray(
 }
 
 function IndicesToAudioConverter({ indexArray }: IndicesToAudioConverterProps) {
-    const partRef = useRef<Tone.Part<[number, { note: string; duration: string }]> | null>(null);
-    const synthRef = useRef<Tone.Synth | null>(null);
-    
+  const partRef = useRef<Tone.Part<
+    [number, { note: string; duration: string }]
+  > | null>(null);
+  const synthRef = useRef<Tone.Synth | null>(null);
 
   useEffect(() => {
     const synth = new Tone.Synth().toDestination();
@@ -85,9 +86,9 @@ function IndicesToAudioConverter({ indexArray }: IndicesToAudioConverterProps) {
       (time, value) => {
         synth.triggerAttackRelease(value.note, value.duration, time);
       },
-      events.map(e => [
+      events.map((e) => [
         e.time * Tone.Time("8n").toSeconds(),
-        { note: e.note, duration: e.duration }
+        { note: e.note, duration: e.duration },
       ])
     );
 
@@ -115,12 +116,8 @@ function IndicesToAudioConverter({ indexArray }: IndicesToAudioConverterProps) {
 
   return (
     <div>
-      <div>
-        {indexArray.map((index, i) => (
-          <span key={i}>{indexDictionary[index]} </span>
-        ))}
-      </div>
-      <button onClick={handlePlay}>Play</button>
+      <button style={{width:500,height:100,fontSize:50}}
+      onClick={handlePlay}>Play</button>
     </div>
   );
 }
