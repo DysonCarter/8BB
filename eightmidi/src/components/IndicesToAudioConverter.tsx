@@ -8,6 +8,7 @@ interface IndicesToAudioConverterProps {
 const ROWS = 16;
 const NOTES = ["C", "D", "E", "F", "G", "A", "B"];
 
+// Build indexDictionary with notes
 let noteI = 0;
 let voicing = 4;
 
@@ -16,7 +17,6 @@ const indexDictionary: Record<number, string> = {
   [ROWS - 2]: "slur",
 };
 
-// Build indexDictionary with notes
 for (let i = ROWS - 3; i >= 0; i--) {
   indexDictionary[i] = `${NOTES[noteI % 7]}${voicing}`;
   noteI++;
@@ -45,7 +45,9 @@ function parseIndexArray(
       }
       time++;
     } else if (val === "slur") {
-      currentDuration++;
+      if (currentNote) {
+        currentDuration++;
+      }
       time++;
     } else {
       if (currentNote) {
@@ -73,18 +75,30 @@ function parseIndexArray(
 }
 
 function IndicesToAudioConverter({ indexArray }: IndicesToAudioConverterProps) {
-  const partRef = useRef<Tone.Part<
-    [number, { note: string; duration: string }]
-  > | null>(null);
+  const partRef = useRef<Tone.Part | null>(null);
   const synthRef = useRef<Tone.Synth | null>(null);
 
   useEffect(() => {
-    const synth = new Tone.Synth().toDestination();
+    synthRef.current = new Tone.Synth().toDestination();
+    return () => {
+      synthRef.current?.dispose();
+    };
+  }, []);
+
+  const handlePlay = async () => {
+    if (!synthRef.current) return;
+
+    await Tone.start();
+
     const events = parseIndexArray(indexArray);
 
     const part = new Tone.Part<[number, { note: string; duration: string }]>(
       (time, value) => {
-        synth.triggerAttackRelease(value.note, value.duration, time);
+        synthRef.current!.triggerAttackRelease(
+          value.note,
+          value.duration,
+          time
+        );
       },
       events.map((e) => [
         e.time * Tone.Time("8n").toSeconds(),
@@ -93,31 +107,27 @@ function IndicesToAudioConverter({ indexArray }: IndicesToAudioConverterProps) {
     );
 
     part.loop = false;
-    Tone.Transport.bpm.value = 120;
 
+    Tone.Transport.stop();
+    Tone.Transport.position = 0;
+    Tone.Transport.cancel();
+
+    part.start(0);
+    Tone.Transport.start("+0.1");
+
+    // Dispose previous part
+    partRef.current?.dispose();
     partRef.current = part;
-    synthRef.current = synth;
-
-    return () => {
-      Tone.Transport.stop();
-      Tone.Transport.cancel();
-      part.dispose();
-      synth.dispose();
-    };
-  }, [indexArray]);
-
-  const handlePlay = async () => {
-    if (partRef.current && synthRef.current) {
-      await Tone.start(); // Required by browsers to unlock audio
-      partRef.current.start(0);
-      Tone.Transport.start("+0.1"); // slight delay for smoother playback
-    }
   };
 
   return (
     <div>
-      <button style={{width:500,height:100,fontSize:50}}
-      onClick={handlePlay}>Play</button>
+      <button
+        style={{ width: 500, height: 100, fontSize: 50 }}
+        onClick={handlePlay}
+      >
+        Play
+      </button>
     </div>
   );
 }
