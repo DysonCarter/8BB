@@ -14,7 +14,7 @@ function NoteContainer({
 }: NoteContainerProps) {
 
   // colors for notes
-  let bgcolor = "rgb(198, 188, 137)";
+  let bgcolor = "rgb(0,0,0,0)";
   if(children === "rest"){
     bgcolor = "grey";
   } else if(children === "slur"){

@@ -1,5 +1,4 @@
 .musicGrid {
-  background-color: rgb(198, 188, 137);
   height: 400px;
   display: grid;
   grid-auto-flow: column;
@@ -21,6 +20,7 @@
   cursor: grab;
   font-family: 'Fredoka', sans-serif;
   color: white;
+  border-radius: 5px;
 }
 
 .staffHolder {
@@ -35,8 +35,8 @@
     display: none;
   }
   width: 75vw;
-  border: 30px solid rgb(128, 26, 26);
-  background-color: rgb(168, 79, 79);
+  border: 30px solid #D4CB92;
+  background-color: #E6E1C5;
   border-radius: 30px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
@@ -49,26 +49,26 @@
   font-family: 'Fredoka', sans-serif;
   font-weight: 600;
   cursor: pointer;
-  background-color: rgb(168, 79, 79);
+  background-color: #80A4ED;
   color: white;
   border: none;
   border-radius: 12px;
-  box-shadow: 0 4px 0 rgb(128, 26, 26);
+  box-shadow: 0 4px 0 #395C6B;
   transition: all 0.1s ease;
-  text-shadow: 2px 2px 0 rgb(128, 26, 26);
+  text-shadow: 2px 2px 0 #395C6B;
 }
 
 .playButton:hover {
-  background-color: rgb(178, 89, 89);
+  background-color: #80A4ED;
   transform: translateY(-2px);
-  box-shadow: 0 6px 0 rgb(128, 26, 26);
-  text-shadow: 3px 3px 0 rgb(128, 26, 26);
+  box-shadow: 0 6px 0 #395C6B;
+  text-shadow: 3px 3px 0 #395C6B;
 }
 
 .playButton:active {
   transform: translateY(2px);
-  box-shadow: 0 2px 0 rgb(128, 26, 26);
-  text-shadow: 1px 1px 0 rgb(128, 26, 26);
+  box-shadow: 0 2px 0 #395C6B;
+  text-shadow: 1px 1px 0 #395C6B;
 }
 
 .playButtonContainer {
