@@ -18,20 +18,63 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: grab;
+  font-family: 'Fredoka', sans-serif;
+  color: white;
 }
 
 .staffHolder {
   height: auto;
   margin: auto;
   overflow-x: scroll;
+  scrollbar-width: none;
+  -webkit-scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Hide scrollbar for Safari */
+  &::-webkit-scrollbar {
+    display: none;
+  }
   width: 75vw;
   border: 30px solid rgb(128, 26, 26);
   background-color: rgb(168, 79, 79);
   border-radius: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .playButton {
-  width: 500px;
-  height: 100px;
-  font-size: 50px;
+  padding: 10px 20px;
+  width: 100px;
+  height: 50px;
+  font-size: 18px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: rgb(168, 79, 79);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 0 rgb(128, 26, 26);
+  transition: all 0.1s ease;
+  text-shadow: 2px 2px 0 rgb(128, 26, 26);
+}
+
+.playButton:hover {
+  background-color: rgb(178, 89, 89);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 rgb(128, 26, 26);
+  text-shadow: 3px 3px 0 rgb(128, 26, 26);
+}
+
+.playButton:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgb(128, 26, 26);
+  text-shadow: 1px 1px 0 rgb(128, 26, 26);
+}
+
+.playButtonContainer {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
 }
