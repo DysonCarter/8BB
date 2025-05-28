@@ -6,6 +6,8 @@ import * as Tone from "tone";
 const COLS = 50;
 const ROWS = 16;
 
+const MARIO = [11, 14, 9, 14, 8, 6, 14, 14, 15, 15, 8, 9, 11, 13, 12, 11, 12, 11, 12, 14, 13, 15, 12, 12, 12, 8, 12, 5, 15, 15, 12, 11, 12, 11, 12, 11, 15, 15, 8, 9, 8, 9, 8, 12, 14, 11, 14, 14, 15, 15]
+
 // Build indexDictionary with notes
 const indexDictionary: Record<number, string> = {
   [ROWS - 1]: "rest",
@@ -21,11 +23,11 @@ for (let i = ROWS - 3; i >= 0; i--) {
 }
 
 function MusicStaff() {
-  const [activeIndices, setActiveIndices] = useState<number[]>(
-    Array(COLS).fill(ROWS - 1)
-  );
-
+  const [activeIndices, setActiveIndices] = useState<number[]>([...MARIO]);
+  const [dragColumn, setDragColumn] = useState<number | null>(null);
+  const gridRef = useRef<HTMLDivElement | null>(null);
   const synthRef = useRef<Tone.Synth | null>(null);
+  const lastPlayTimeRef = useRef<number>(0);
 
   useEffect(() => {
     synthRef.current = new Tone.Synth().toDestination();
@@ -34,21 +36,59 @@ function MusicStaff() {
     };
   }, []);
 
+  const playNote = (row: number) => {
+    const note = indexDictionary[row];
+    if (!note || note === "rest" || note === "slur") return;
+
+    const now = Tone.now();
+
+    // Prevent too-fast triggering
+    if (now - lastPlayTimeRef.current < 0.05) return;
+
+    lastPlayTimeRef.current = now;
+
+    Tone.start();
+    synthRef.current?.triggerAttackRelease(note, "8n", now + 0.01);
+  };
+
+  const handleMouseDown = (column: number) => {
+    setDragColumn(column);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (dragColumn === null || !gridRef.current) return;
+
+    const gridTop = gridRef.current.getBoundingClientRect().top;
+    const y = e.clientY - gridTop;
+    const rowHeight = 30; // Make sure this matches CSS
+
+    const row = Math.max(0, Math.min(ROWS - 1, Math.floor(y / rowHeight)));
+
+    setActiveIndices((prev) => {
+      const newActive = [...prev];
+      if (newActive[dragColumn] !== row) {
+        newActive[dragColumn] = row;
+        playNote(row);
+      }
+      return newActive;
+    });
+  };
+
+  const handleMouseUp = () => {
+    setDragColumn(null);
+  };
+
   const handleNoteClick = (row: number, column: number) => {
     setActiveIndices((prev) => {
       const newActive = [...prev];
       newActive[column] = row;
       return newActive;
     });
-
-    const note = indexDictionary[row];
-    if (note && note !== "rest" && note !== "slur") {
-      Tone.start(); // required on first user interaction
-      synthRef.current?.triggerAttackRelease(note, "8n");
-    }
+  
+    playNote(row);
   };
 
-  let noteContainers = [];
+  const noteContainers = [];
   for (let column = 0; column < COLS; column++) {
     for (let row = 0; row < ROWS; row++) {
       const index = column * ROWS + row;
@@ -58,9 +98,8 @@ function MusicStaff() {
         <NoteContainer
           key={index}
           active={isActive}
-          onClick={() => {
-            handleNoteClick(row, column);
-          }}
+          onClick={() => handleNoteClick(row, column)}
+          onMouseDown={() => handleMouseDown(column)}
         >
           {indexDictionary[row]}
         </NoteContainer>
@@ -68,17 +107,21 @@ function MusicStaff() {
     }
   }
 
-  let active_string = "";
-  let indexArray = [];
-  for (let i in activeIndices) {
-    active_string += `${activeIndices[i]}, `;
-    indexArray.push(activeIndices[i]);
-  }
+  const indexArray = [...activeIndices];
 
   return (
     <>
-      <div className="musicGrid">{noteContainers}</div>
+      <div
+        className="musicGrid"
+        ref={gridRef}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      >
+        {noteContainers}
+      </div>
       <IndicesToAudioConverter indexArray={indexArray} />
+      <div>{indexArray.join(', ')}</div>
     </>
   );
 }

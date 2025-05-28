@@ -6,7 +6,6 @@
 .musicGrid {
   background-color: rgb(198, 188, 137);
   height: 500px;
-  width: 1600px;
   display: grid;
   grid-template-columns: repeat(var(--COLS),1fr);
   grid-template-rows: repeat(var(--ROWS),1fr);
@@ -15,17 +14,10 @@
   align-content: center;
 }
 
-.musicNote {
-  height: 10px;
-  width: 10px;
-  margin: 5px;
-  background-color: rgb(41, 41, 188);
-}
-
 .noteContainer {
   height: 100%;
-  width: 100%;
-  border: solid 5px black;
+  width: 60px;
+  user-select: none;        
   box-sizing: border-box;
   display: flex;
   align-items: center;
