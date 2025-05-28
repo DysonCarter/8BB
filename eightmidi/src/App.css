@@ -1,6 +1,9 @@
 body {
+  margin: 0;
+  padding: 0;
   background-color: #BCD3F2;
   overscroll-behavior: none;
+  font-family: 'Fredoka', sans-serif;
 }
 
 .musicGrid {
@@ -153,4 +156,27 @@ body {
 
 .noteContainer.playing {
   animation: bounce 0.5s ease infinite;
+}
+
+.mainPageHeader { 
+  height: 100px;
+  width: 100%;
+  background-color: #80A4ED;
+  margin-bottom: 20px;
+  font-size: 60px;
+  font-weight: 600;
+  text-shadow: 2px 2px 0 #395C6B;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mainPageHeaderSubtitle {
+  font-size: 20px;
+  font-weight: 400;
+  text-shadow: 2px 2px 0 #395C6B;
+  color: white;
+  align-self: flex-end;
+  margin-bottom: 25px;
 }

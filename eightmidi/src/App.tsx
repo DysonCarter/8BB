@@ -1,9 +1,9 @@
 import './App.css'
-import StaffHolder from './components/StaffHolder'
+import MainPage from './components/MainPage'
 
 function App() {
   return <>
-  <StaffHolder/>
+  <MainPage />
   </>
   
 }
