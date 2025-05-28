@@ -3,15 +3,14 @@ import NoteContainer from "./NoteContainer";
 import { useState, useRef, useEffect } from "react";
 import * as Tone from "tone";
 
-let MARIO = [11, 14, 9, 14, 8, 6, 14, 14, 15, 15, 8, 9, 11, 13, 12, 11, 12, 11, 12, 14, 13, 15, 12, 12, 12, 8, 12, 5, 15, 15, 12, 11, 12, 11, 12, 11, 15, 15, 8, 9, 8, 9, 8, 12, 14, 11, 14, 14, 15, 15]
-
 interface MusicStaffProps {
   COLS: number;
   ROWS: number;
+  song: Array<number>;
 }
 
-function MusicStaff({COLS, ROWS}: MusicStaffProps) {
-  const [activeIndices, setActiveIndices] = useState<number[]>([...MARIO]);
+function MusicStaff({COLS, ROWS, song}: MusicStaffProps) {
+  const [activeIndices, setActiveIndices] = useState<number[]>([...song]);
   const [dragColumn, setDragColumn] = useState<number | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
   const synthRef = useRef<Tone.Synth | null>(null);
