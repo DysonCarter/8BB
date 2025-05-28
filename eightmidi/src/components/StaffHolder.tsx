@@ -2,24 +2,37 @@ import { useState } from "react";
 import MusicStaff from "./MusicStaff";
 
 function StaffHolder() {
-
     const [cols, setCols] = useState(50);
     const [rows, setRows] = useState(16);
 
-    const changeColumns = (newCols: number) => {
-        setCols(newCols);
+    const changeColumns = (delta: number) => {
+        const newCols = cols + delta;
+        const clampedValue = Math.min(Math.max(1, newCols), 1000);
+        setCols(clampedValue);
     }
 
-    const changeRows = (newRows: number) => {
-        setRows(newRows);
+    const changeRows = (delta: number) => {
+        const newRows = rows + delta;
+        const clampedValue = Math.min(Math.max(1, newRows), 32);
+        setRows(clampedValue);
     }
 
     return <>
     <div className="staffHolder">
     <MusicStaff COLS={cols} ROWS={rows}/>
     </div>
-    <input type="number" min="1" max="1000" value={cols} onChange={(e) => changeColumns(parseInt(e.target.value))} />
-    <input type="number" min="1" max="32" value={rows} onChange={(e) => changeRows(parseInt(e.target.value))} />
+    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <button className="inputRC" onClick={() => changeColumns(-1)}>-</button>
+            <span style={{ fontFamily: 'Fredoka, sans-serif' }}>Cols: {cols}</span>
+            <button className="inputRC" onClick={() => changeColumns(1)}>+</button>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <button className="inputRC" onClick={() => changeRows(-1)}>-</button>
+            <span style={{ fontFamily: 'Fredoka, sans-serif' }}>Rows: {rows}</span>
+            <button className="inputRC" onClick={() => changeRows(1)}>+</button>
+        </div>
+    </div>
     </>
 }
 

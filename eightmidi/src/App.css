@@ -85,3 +85,30 @@ body {
   transform: translateX(-50%);
   z-index: 1000;
 }
+
+.inputRC {
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  font-family: 'Fredoka', sans-serif;
+  border-radius: 5px;
+  background-color: #80A4ED;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 0 #395C6B;
+  transition: all 0.1s ease;
+}
+
+.inputRC:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 #395C6B;
+}
+
+.inputRC:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #395C6B;
+}
