@@ -18,9 +18,9 @@ function NoteContainer({
   if(children === "rest"){
     bgcolor = "grey";
   } else if(children === "slur"){
-    bgcolor = "plum";
+    bgcolor = "#8E4585";
   } else if (children){
-    bgcolor = "green";
+    bgcolor = "#395C6B";
   }
   return (
     <div

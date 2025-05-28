@@ -1,3 +1,7 @@
+body {
+  background-color: #BCD3F2;
+}
+
 .musicGrid {
   height: 400px;
   display: grid;
@@ -21,6 +25,8 @@
   font-family: 'Fredoka', sans-serif;
   color: white;
   border-radius: 5px;
+  text-shadow: 2px 2px 0 #395C6B;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
 .staffHolder {
@@ -29,16 +35,17 @@
   overflow-x: scroll;
   scrollbar-width: none;
   -webkit-scrollbar-width: none;
+  overscroll-behavior: none;
   -ms-overflow-style: none;
   /* Hide scrollbar for Safari */
   &::-webkit-scrollbar {
     display: none;
   }
   width: 75vw;
-  border: 30px solid #D4CB92;
+  border: 30px solid #bbb482;
   background-color: #E6E1C5;
   border-radius: 30px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
 .playButton {
