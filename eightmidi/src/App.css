@@ -1,6 +1,6 @@
 .musicGrid {
   background-color: rgb(198, 188, 137);
-  height: 600px;
+  height: 400px;
   display: grid;
   grid-auto-flow: column;
   align-items: center;
@@ -9,7 +9,7 @@
 
 .noteContainer {
   height: 100%;
-  width: 60px;
+  width: 40px;
   user-select: none;
   -webkit-user-select: none; /* Chrome/Safari */        
   -moz-user-select: none; /* Firefox */
@@ -21,6 +21,7 @@
 }
 
 .staffHolder {
+  height: auto;
   margin: auto;
   overflow-x: scroll;
   width: 75vw;
