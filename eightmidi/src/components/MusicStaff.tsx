@@ -40,6 +40,10 @@ function MusicStaff({COLS, ROWS, song}: MusicStaffProps) {
     prevColsRef.current = COLS;
   }, [COLS, ROWS]);
 
+  useEffect(() => {
+    setActiveIndices([...song]);
+  }, [song]);
+
   // Build indexDictionary with notes
   const indexDictionary: Record<number, string> = {
     [ROWS - 1]: "rest",
