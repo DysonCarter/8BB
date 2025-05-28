@@ -60,7 +60,8 @@ function MusicStaff() {
 
     const gridTop = gridRef.current.getBoundingClientRect().top;
     const y = e.clientY - gridTop;
-    const rowHeight = 30; // Make sure this matches CSS
+    const gridHeight = gridRef.current.clientHeight;
+    const rowHeight = gridHeight / ROWS;
 
     const row = Math.max(0, Math.min(ROWS - 1, Math.floor(y / rowHeight)));
 
