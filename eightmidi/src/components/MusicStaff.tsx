@@ -102,7 +102,7 @@ function MusicStaff() {
           onClick={() => handleNoteClick(row, column)}
           onMouseDown={() => handleMouseDown(column)}
         >
-          {indexDictionary[row]}
+          {isActive ? indexDictionary[row] : null}
         </NoteContainer>
       );
     }
