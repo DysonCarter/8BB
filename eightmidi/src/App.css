@@ -141,3 +141,16 @@ body {
   transform: translateY(2px);
   box-shadow: 0 1px 0 #6b3939;
 }
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.noteContainer.playing {
+  animation: bounce 0.5s ease infinite;
+}

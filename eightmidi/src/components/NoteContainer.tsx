@@ -1,7 +1,7 @@
-
 type NoteContainerProps = {
   children?: React.ReactNode;
   active?: boolean;
+  playing?: boolean;
   onClick?: () => void;
   onMouseDown?: () => void;
 };
@@ -9,6 +9,7 @@ type NoteContainerProps = {
 function NoteContainer({
   children,
   active = false,
+  playing = false,
   onClick,
   onMouseDown,
 }: NoteContainerProps) {
@@ -24,7 +25,7 @@ function NoteContainer({
   }
   return (
     <div
-      className="noteContainer"
+      className={`noteContainer ${playing ? 'playing' : ''}`}
       style={{ backgroundColor: bgcolor}}
       onClick={onClick}
       onMouseDown={onMouseDown}

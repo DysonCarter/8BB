@@ -1,9 +1,10 @@
 import * as Tone from "tone";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface IndicesToAudioConverterProps {
   indexArray: Array<number>;
   rows: number;
+  onPlayingNoteChange?: (column: number | null) => void;
 }
 
 const NOTES = ["C", "D", "E", "F", "G", "A", "B"];
@@ -60,9 +61,10 @@ function parseIndexArray(
   return events;
 }
 
-function IndicesToAudioConverter({ indexArray, rows }: IndicesToAudioConverterProps) {
+function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange }: IndicesToAudioConverterProps) {
   const partRef = useRef<Tone.Part | null>(null);
   const synthRef = useRef<Tone.Synth | null>(null);
+  const [currentPlayingColumn, setCurrentPlayingColumn] = useState<number | null>(null);
 
   useEffect(() => {
     synthRef.current = new Tone.Synth().toDestination();
@@ -107,12 +109,31 @@ function IndicesToAudioConverter({ indexArray, rows }: IndicesToAudioConverterPr
 
     part.loop = false;
 
+    // Clear any existing scheduled events
     Tone.Transport.stop();
     Tone.Transport.position = 0;
     Tone.Transport.cancel();
 
+    // Schedule the part to start
     part.start(0);
     Tone.Transport.start("+0.1");
+
+    // Update current playing column based on time
+    Tone.Transport.scheduleRepeat((time) => {
+      const currentTime = Tone.Transport.seconds;
+      const column = Math.floor(currentTime / Tone.Time("8n").toSeconds());
+      if (column !== currentPlayingColumn && column < indexArray.length) {
+        setCurrentPlayingColumn(column);
+        onPlayingNoteChange?.(column);
+      }
+    }, "8n");
+
+    // Schedule cleanup at the end of playback
+    const totalDuration = indexArray.length * Tone.Time("8n").toSeconds();
+    Tone.Transport.scheduleOnce(() => {
+      setCurrentPlayingColumn(null);
+      onPlayingNoteChange?.(null);
+    }, totalDuration);
 
     // Dispose previous part
     partRef.current?.dispose();

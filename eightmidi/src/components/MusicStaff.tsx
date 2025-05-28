@@ -12,6 +12,7 @@ interface MusicStaffProps {
 function MusicStaff({COLS, ROWS, song}: MusicStaffProps) {
   const [activeIndices, setActiveIndices] = useState<number[]>([...song]);
   const [dragColumn, setDragColumn] = useState<number | null>(null);
+  const [playingColumn, setPlayingColumn] = useState<number | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
   const synthRef = useRef<Tone.Synth | null>(null);
   const lastPlayTimeRef = useRef<number>(0);
@@ -123,11 +124,13 @@ function MusicStaff({COLS, ROWS, song}: MusicStaffProps) {
     for (let row = 0; row < ROWS; row++) {
       const index = column * ROWS + row;
       const isActive = activeIndices[column] === row;
+      const isPlaying = playingColumn === column && isActive;
 
       noteContainers.push(
         <NoteContainer
           key={index}
           active={isActive}
+          playing={isPlaying}
           onClick={() => handleNoteClick(row, column)}
           onMouseDown={() => handleMouseDown(column)}
         >
@@ -154,7 +157,11 @@ function MusicStaff({COLS, ROWS, song}: MusicStaffProps) {
       >
         {noteContainers}
       </div>
-      <IndicesToAudioConverter indexArray={indexArray} rows={ROWS} />
+      <IndicesToAudioConverter 
+        indexArray={indexArray} 
+        rows={ROWS} 
+        onPlayingNoteChange={setPlayingColumn}
+      />
       {console.log(indexArray.join(', '))}
     </>
   );
