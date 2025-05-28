@@ -3,31 +3,44 @@ import NoteContainer from "./NoteContainer";
 import { useState, useRef, useEffect } from "react";
 import * as Tone from "tone";
 
-const COLS = 50;
-const ROWS = 16;
+let MARIO = [11, 14, 9, 14, 8, 6, 14, 14, 15, 15, 8, 9, 11, 13, 12, 11, 12, 11, 12, 14, 13, 15, 12, 12, 12, 8, 12, 5, 15, 15, 12, 11, 12, 11, 12, 11, 15, 15, 8, 9, 8, 9, 8, 12, 14, 11, 14, 14, 15, 15]
 
-const MARIO = [11, 14, 9, 14, 8, 6, 14, 14, 15, 15, 8, 9, 11, 13, 12, 11, 12, 11, 12, 14, 13, 15, 12, 12, 12, 8, 12, 5, 15, 15, 12, 11, 12, 11, 12, 11, 15, 15, 8, 9, 8, 9, 8, 12, 14, 11, 14, 14, 15, 15]
-
-// Build indexDictionary with notes
-const indexDictionary: Record<number, string> = {
-  [ROWS - 1]: "rest",
-  [ROWS - 2]: "slur",
-};
-const NOTES = ["C", "D", "E", "F", "G", "A", "B"];
-let noteI = 0;
-let voicing = 4;
-for (let i = ROWS - 3; i >= 0; i--) {
-  indexDictionary[i] = `${NOTES[noteI % 7]}${voicing}`;
-  noteI++;
-  if (noteI % 7 === 0) voicing++;
+interface MusicStaffProps {
+  COLS: number;
+  ROWS: number;
 }
 
-function MusicStaff() {
+function MusicStaff({COLS, ROWS}: MusicStaffProps) {
   const [activeIndices, setActiveIndices] = useState<number[]>([...MARIO]);
   const [dragColumn, setDragColumn] = useState<number | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
   const synthRef = useRef<Tone.Synth | null>(null);
   const lastPlayTimeRef = useRef<number>(0);
+  const prevRowsRef = useRef<number>(ROWS);
+
+  // Effect to shift notes down when rows are added
+  useEffect(() => {
+    if (ROWS > prevRowsRef.current) {
+      setActiveIndices(prev => prev.map(index => index + 1));
+    } else if (ROWS < prevRowsRef.current) {
+      setActiveIndices(prev => prev.map(index => Math.max(index - 1, 0)));
+    }
+    prevRowsRef.current = ROWS;
+  }, [ROWS]);
+
+  // Build indexDictionary with notes
+  const indexDictionary: Record<number, string> = {
+    [ROWS - 1]: "rest",
+    [ROWS - 2]: "slur",
+  };
+  const NOTES = ["C", "D", "E", "F", "G", "A", "B"];
+  let noteI = 0;
+  let voicing = 4;  // Start with C4
+  for (let i = ROWS - 3; i >= 0; i--) {
+    indexDictionary[i] = `${NOTES[noteI % 7]}${voicing}`;
+    noteI++;
+    if (noteI % 7 === 0) voicing++;  // Increment octave as we go down
+  }
 
   useEffect(() => {
     synthRef.current = new Tone.Synth().toDestination();
@@ -125,7 +138,7 @@ function MusicStaff() {
       >
         {noteContainers}
       </div>
-      <IndicesToAudioConverter indexArray={indexArray} />
+      <IndicesToAudioConverter indexArray={indexArray} rows={ROWS} />
       {console.log(indexArray.join(', '))}
     </>
   );

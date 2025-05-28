@@ -3,28 +3,14 @@ import { useEffect, useRef } from "react";
 
 interface IndicesToAudioConverterProps {
   indexArray: Array<number>;
+  rows: number;
 }
 
-const ROWS = 16;
 const NOTES = ["C", "D", "E", "F", "G", "A", "B"];
 
-// Build indexDictionary with notes
-let noteI = 0;
-let voicing = 4;
-
-const indexDictionary: Record<number, string> = {
-  [ROWS - 1]: "rest",
-  [ROWS - 2]: "slur",
-};
-
-for (let i = ROWS - 3; i >= 0; i--) {
-  indexDictionary[i] = `${NOTES[noteI % 7]}${voicing}`;
-  noteI++;
-  if (noteI % 7 === 0) voicing++;
-}
-
 function parseIndexArray(
-  indexArray: number[]
+  indexArray: number[],
+  indexDictionary: Record<number, string>
 ): Array<{ time: number; note: string; duration: string }> {
   const events: Array<{ time: number; note: string; duration: string }> = [];
   let time = 0;
@@ -74,7 +60,7 @@ function parseIndexArray(
   return events;
 }
 
-function IndicesToAudioConverter({ indexArray }: IndicesToAudioConverterProps) {
+function IndicesToAudioConverter({ indexArray, rows }: IndicesToAudioConverterProps) {
   const partRef = useRef<Tone.Part | null>(null);
   const synthRef = useRef<Tone.Synth | null>(null);
 
@@ -90,7 +76,20 @@ function IndicesToAudioConverter({ indexArray }: IndicesToAudioConverterProps) {
 
     await Tone.start();
 
-    const events = parseIndexArray(indexArray);
+    // Build indexDictionary with notes using rows
+    let noteI = 0;
+    let voicing = 4;
+    const indexDictionary: Record<number, string> = {
+      [rows - 1]: "rest",
+      [rows - 2]: "slur",
+    };
+    for (let i = rows - 3; i >= 0; i--) {
+      indexDictionary[i] = `${NOTES[noteI % 7]}${voicing}`;
+      noteI++;
+      if (noteI % 7 === 0) voicing++;
+    }
+
+    const events = parseIndexArray(indexArray, indexDictionary);
 
     const part = new Tone.Part<[number, { note: string; duration: string }]>(
       (time, value) => {
