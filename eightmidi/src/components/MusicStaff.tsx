@@ -17,6 +17,7 @@ function MusicStaff({COLS, ROWS}: MusicStaffProps) {
   const synthRef = useRef<Tone.Synth | null>(null);
   const lastPlayTimeRef = useRef<number>(0);
   const prevRowsRef = useRef<number>(ROWS);
+  const prevColsRef = useRef<number>(COLS);
 
   // Effect to shift notes down when rows are added
   useEffect(() => {
@@ -27,6 +28,18 @@ function MusicStaff({COLS, ROWS}: MusicStaffProps) {
     }
     prevRowsRef.current = ROWS;
   }, [ROWS]);
+
+  // Effect to handle column changes
+  useEffect(() => {
+    if (COLS < prevColsRef.current) {
+      // Remove columns from the end when decreasing
+      setActiveIndices(prev => prev.slice(0, COLS));
+    } else if (COLS > prevColsRef.current) {
+      // Add new columns with default value (rest) when increasing
+      setActiveIndices(prev => [...prev, ...Array(COLS - prevColsRef.current).fill(ROWS - 1)]);
+    }
+    prevColsRef.current = COLS;
+  }, [COLS, ROWS]);
 
   // Build indexDictionary with notes
   const indexDictionary: Record<number, string> = {
