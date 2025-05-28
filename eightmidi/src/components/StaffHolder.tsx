@@ -1,7 +1,11 @@
 import MusicStaff from "./MusicStaff";
 
 function StaffHolder() {
-    return <></>
+    return <>
+    <div className="staffHolder">
+    <MusicStaff/>
+    </div>
+    </>
 }
 
 export default StaffHolder;

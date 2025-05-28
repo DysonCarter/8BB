@@ -113,6 +113,10 @@ function MusicStaff() {
     <>
       <div
         className="musicGrid"
+        style={{
+          gridTemplateColumns: `repeat(${COLS}, 1fr)`,
+          gridTemplateRows: `repeat(${ROWS}, 1fr)`
+        }}
         ref={gridRef}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -121,7 +125,7 @@ function MusicStaff() {
         {noteContainers}
       </div>
       <IndicesToAudioConverter indexArray={indexArray} />
-      <div>{indexArray.join(', ')}</div>
+      {console.log(indexArray.join(', '))}
     </>
   );
 }

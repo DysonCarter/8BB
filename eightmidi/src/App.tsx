@@ -1,9 +1,9 @@
 import './App.css'
-import MusicStaff from './components/MusicStaff'
+import StaffHolder from './components/StaffHolder'
 
 function App() {
   return <>
-  <MusicStaff/>
+  <StaffHolder/>
   </>
   
 }
