@@ -1,5 +1,6 @@
 body {
   background-color: #BCD3F2;
+  overscroll-behavior: none;
 }
 
 .musicGrid {
