@@ -122,8 +122,7 @@ function IndicesToAudioConverter({ indexArray }: IndicesToAudioConverterProps) {
 
   return (
     <div>
-      <button
-        style={{ width: 500, height: 100, fontSize: 50 }}
+      <button className="playButton"
         onClick={handlePlay}
       >
         Play

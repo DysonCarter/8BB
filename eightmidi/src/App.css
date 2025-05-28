@@ -29,3 +29,9 @@
   background-color: rgb(168, 79, 79);
   border-radius: 30px;
 }
+
+.playButton {
+  width: 500px;
+  height: 100px;
+  font-size: 50px;
+}
