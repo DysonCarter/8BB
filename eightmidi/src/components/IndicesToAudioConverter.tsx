@@ -5,6 +5,7 @@ interface IndicesToAudioConverterProps {
   indexArray: Array<number>;
   rows: number;
   onPlayingNoteChange?: (column: number | null) => void;
+  tempo: number;
 }
 
 const NOTES = ["C", "D", "E", "F", "G", "A", "B"];
@@ -14,54 +15,60 @@ function parseIndexArray(
   indexDictionary: Record<number, string>
 ): Array<{ time: number; note: string; duration: string }> {
   const events: Array<{ time: number; note: string; duration: string }> = [];
-  let time = 0;
+
+  const noteDuration = ["8n", "4n", "4n + 8n"];
+
   let currentNote: string | null = null;
-  let currentDuration = 0;
+  let slurCount = 0;
+  let noteStartTime = 0;
 
   for (let i = 0; i < indexArray.length; i++) {
     const val = indexDictionary[indexArray[i]];
 
     if (val === "rest") {
-      if (currentNote) {
+      if (currentNote !== null) {
         events.push({
-          time: time - currentDuration,
+          time: noteStartTime,
           note: currentNote,
-          duration: `${currentDuration * 0.5}n`,
+          duration: noteDuration[Math.min(slurCount, noteDuration.length - 1)],
         });
         currentNote = null;
       }
-      time++;
+      slurCount = 0;
     } else if (val === "slur") {
-      if (currentNote) {
-        currentDuration++;
+      if (currentNote !== null) {
+        slurCount++;
       }
-      time++;
     } else {
-      if (currentNote) {
+      // It's a note
+      if (currentNote !== null) {
+        // Push the previous note
         events.push({
-          time: time - currentDuration,
+          time: noteStartTime,
           note: currentNote,
-          duration: `${currentDuration * 0.5}n`,
+          duration: noteDuration[Math.min(slurCount, noteDuration.length - 1)],
         });
       }
       currentNote = val;
-      currentDuration = 1;
-      time++;
+      slurCount = 0;
+      noteStartTime = i;
     }
   }
 
-  if (currentNote) {
+  // Push the final note if it exists
+  if (currentNote !== null) {
     events.push({
-      time: time - currentDuration,
+      time: noteStartTime,
       note: currentNote,
-      duration: `${currentDuration * 0.5}n`,
+      duration: noteDuration[Math.min(slurCount, noteDuration.length - 1)],
     });
   }
 
   return events;
 }
 
-function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange }: IndicesToAudioConverterProps) {
+
+function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange, tempo }: IndicesToAudioConverterProps) {
   const partRef = useRef<Tone.Part | null>(null);
   const synthRef = useRef<Tone.Synth | null>(null);
   const [currentPlayingColumn, setCurrentPlayingColumn] = useState<number | null>(null);
@@ -77,6 +84,7 @@ function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange }: Indi
     if (!synthRef.current) return;
 
     await Tone.start();
+    Tone.Transport.bpm.value = tempo * 120;
 
     // Build indexDictionary with notes using rows
     let noteI = 0;
