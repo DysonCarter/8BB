@@ -226,3 +226,42 @@ body::after {
   color: white;
   text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
 }
+
+.inputSlider {
+  -webkit-appearance: none;
+  width: 150px;
+  height: 8px;
+  border-radius: 4px;
+  background: #395C6B;
+  outline: none;
+  opacity: 1;
+  transition: box-shadow 0.2s;
+  transition: scale 0.2s;
+}
+
+.inputSlider:hover {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: box-shadow 0.2s;
+  scale: 1.05;
+  transition: scale 0.2s;
+}
+
+.inputSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.inputSlider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}

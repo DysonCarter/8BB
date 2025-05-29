@@ -31,7 +31,8 @@ function StaffHolder() {
     </div>
     <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <input type="range" min=".1" max="3" step="0.1" value={tempo} onChange={(e) => setTempo(parseFloat(e.target.value))} />
+            <span style={{ fontFamily: 'Fredoka, sans-serif' }}>Tempo: {tempo.toFixed(1)}</span>
+            <input className="inputSlider" type="range" min=".1" max="3" step="0.1" value={tempo} onChange={(e) => setTempo(parseFloat(e.target.value))} />
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <button className="inputRC" onClick={() => changeColumns(-1)}>-</button>
