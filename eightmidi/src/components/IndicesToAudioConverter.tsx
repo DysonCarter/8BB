@@ -82,10 +82,10 @@ function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange, tempo 
 
   const handlePlay = async () => {
     if (!synthRef.current) return;
-
+  
     await Tone.start();
     Tone.Transport.bpm.value = tempo * 120;
-
+  
     // Build indexDictionary with notes using rows
     let noteI = 0;
     let voicing = 4;
@@ -98,55 +98,52 @@ function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange, tempo 
       noteI++;
       if (noteI % 7 === 0) voicing++;
     }
-
-    const events = parseIndexArray(indexArray, indexDictionary);
-
-    const part = new Tone.Part<[number, { note: string; duration: string }]>(
-      (time, value) => {
-        synthRef.current!.triggerAttackRelease(
-          value.note,
-          value.duration,
-          time
-        );
-      },
-      events.map((e) => [
-        e.time * Tone.Time("8n").toSeconds(),
-        { note: e.note, duration: e.duration },
-      ])
-    );
-
-    part.loop = false;
-
-    // Clear any existing scheduled events
-    Tone.Transport.stop();
-    Tone.Transport.position = 0;
-    Tone.Transport.cancel();
-
-    // Schedule the part to start
-    part.start(0);
-    Tone.Transport.start("+0.1");
-
-    // Update current playing column based on time
-    Tone.Transport.scheduleRepeat((time) => {
-      const currentTime = Tone.Transport.seconds;
-      const column = Math.floor(currentTime / Tone.Time("8n").toSeconds());
-      if (column !== currentPlayingColumn && column < indexArray.length) {
-        setCurrentPlayingColumn(column);
-        onPlayingNoteChange?.(column);
+  
+    const indexEvents = indexArray.map((val, i) => ({
+      time: i * Tone.Time("8n").toSeconds(),
+      type: indexDictionary[val],
+    }));
+  
+    const synth = synthRef.current;
+    let currentlyPlaying: string | null = null;
+  
+    const scheduleId = Tone.Transport.scheduleRepeat((time) => {
+      const step = Math.floor(Tone.Transport.seconds / Tone.Time("8n").toSeconds());
+      const entry = indexEvents[step];
+      if (!entry) return;
+  
+      if (entry.type === "rest") {
+        if (currentlyPlaying) {
+          synth.triggerRelease(time);
+          currentlyPlaying = null;
+        }
+      } else if (entry.type === "slur") {
+        // Hold note, do nothing
+      } else {
+        if (entry.type !== currentlyPlaying) {
+          if (currentlyPlaying) {
+            synth.triggerRelease(time);
+          }
+          synth.triggerAttack(entry.type, time);
+          currentlyPlaying = entry.type;
+        }
       }
+  
+      setCurrentPlayingColumn(step);
+      onPlayingNoteChange?.(step);
     }, "8n");
-
-    // Schedule cleanup at the end of playback
+  
     const totalDuration = indexArray.length * Tone.Time("8n").toSeconds();
     Tone.Transport.scheduleOnce(() => {
+      synth.triggerRelease();
       setCurrentPlayingColumn(null);
       onPlayingNoteChange?.(null);
+      Tone.Transport.clear(scheduleId);
     }, totalDuration);
-
-    // Dispose previous part
-    partRef.current?.dispose();
-    partRef.current = part;
+  
+    Tone.Transport.start("+0.1");
   };
+  
 
   return (
     <div className="playButtonContainer">
