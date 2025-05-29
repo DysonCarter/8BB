@@ -1,8 +1,9 @@
-body {
+html, body {
   margin: 0;
   padding: 0;
   background-color: #BCD3F2;
   overscroll-behavior: none;
+  -webkit-overscroll-behavior: none;
   font-family: 'Fredoka', sans-serif;
 }
 
@@ -179,4 +180,29 @@ body {
   color: white;
   align-self: flex-end;
   margin-bottom: 25px;
+}
+
+.About {
+  margin: auto;
+  margin-top: 20px;
+  height: auto;
+  width: 50vw;
+  background-color: #395C6B;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.AboutTitle {
+  font-size: 20px;
+  font-weight: 400;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  color: white;
+}
+
+.AboutContent {
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
 }
