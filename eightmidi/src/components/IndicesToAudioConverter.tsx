@@ -10,64 +10,6 @@ interface IndicesToAudioConverterProps {
 
 const NOTES = ["C", "D", "E", "F", "G", "A", "B"];
 
-function parseIndexArray(
-  indexArray: number[],
-  indexDictionary: Record<number, string>
-): Array<{ time: number; note: string; duration: string }> {
-  const events: Array<{ time: number; note: string; duration: string }> = [];
-
-  const noteDuration = ["8n", "4n", "4n + 8n"];
-
-  let currentNote: string | null = null;
-  let slurCount = 0;
-  let noteStartTime = 0;
-
-  for (let i = 0; i < indexArray.length; i++) {
-    const val = indexDictionary[indexArray[i]];
-
-    if (val === "rest") {
-      if (currentNote !== null) {
-        events.push({
-          time: noteStartTime,
-          note: currentNote,
-          duration: noteDuration[Math.min(slurCount, noteDuration.length - 1)],
-        });
-        currentNote = null;
-      }
-      slurCount = 0;
-    } else if (val === "slur") {
-      if (currentNote !== null) {
-        slurCount++;
-      }
-    } else {
-      // It's a note
-      if (currentNote !== null) {
-        // Push the previous note
-        events.push({
-          time: noteStartTime,
-          note: currentNote,
-          duration: noteDuration[Math.min(slurCount, noteDuration.length - 1)],
-        });
-      }
-      currentNote = val;
-      slurCount = 0;
-      noteStartTime = i;
-    }
-  }
-
-  // Push the final note if it exists
-  if (currentNote !== null) {
-    events.push({
-      time: noteStartTime,
-      note: currentNote,
-      duration: noteDuration[Math.min(slurCount, noteDuration.length - 1)],
-    });
-  }
-
-  return events;
-}
-
-
 function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange, tempo }: IndicesToAudioConverterProps) {
   const partRef = useRef<Tone.Part | null>(null);
   const synthRef = useRef<Tone.Synth | null>(null);
