@@ -84,6 +84,16 @@ function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange, tempo 
     if (!synthRef.current) return;
   
     await Tone.start();
+  
+    // Reset Transport
+    Tone.Transport.stop();
+    Tone.Transport.position = 0;
+    Tone.Transport.cancel(); // Clear all scheduled events
+  
+    // Dispose old part if any
+    partRef.current?.dispose();
+    partRef.current = null;
+  
     Tone.Transport.bpm.value = tempo * 120;
   
     // Build indexDictionary with notes using rows
@@ -118,7 +128,7 @@ function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange, tempo 
           currentlyPlaying = null;
         }
       } else if (entry.type === "slur") {
-        // Hold note, do nothing
+        // Do nothing, sustain
       } else {
         if (entry.type !== currentlyPlaying) {
           if (currentlyPlaying) {
@@ -138,11 +148,12 @@ function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange, tempo 
       synth.triggerRelease();
       setCurrentPlayingColumn(null);
       onPlayingNoteChange?.(null);
-      Tone.Transport.clear(scheduleId);
+      Tone.Transport.clear(scheduleId); // Stop the repeat
     }, totalDuration);
   
     Tone.Transport.start("+0.1");
   };
+  
   
 
   return (
