@@ -187,6 +187,7 @@ html, body {
   margin-top: 20px;
   height: auto;
   width: 50vw;
+  min-width: 500px;
   background-color: #395C6B;
   margin-bottom: 20px;
   padding: 20px;
