@@ -1,5 +1,6 @@
 import { useState } from "react";
 import MusicStaff from "./MusicStaff";
+import ShareButton from "./ShareButton";
 
 let MARIO = [11, 14, 9, 14, 8, 6, 14, 14, 15, 15, 8, 9, 11, 13, 12, 11, 12, 11, 12, 14, 13, 15, 12, 12, 12, 8, 12, 5, 15, 15, 12, 11, 12, 11, 12, 11, 15, 15, 8, 9, 8, 9, 8, 12, 14, 11, 14, 14, 15, 15];
 
@@ -25,9 +26,13 @@ function StaffHolder() {
         setSong(Array(cols).fill(rows-1));
     }
 
+    const setNewSong = (newSong: Array<number>) => {
+        setSong(newSong);
+    }
+
     return <>
     <div className="staffHolder">
-    <MusicStaff COLS={cols} ROWS={rows} song={song} tempo={tempo} />
+    <MusicStaff COLS={cols} ROWS={rows} song={song} tempo={tempo} onSongChange={setNewSong} />
     </div>
     <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -46,6 +51,9 @@ function StaffHolder() {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <button className="clearButton" onClick={clearSong}>Clear Song</button>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <ShareButton song={song} tempo={tempo} rows={rows} cols={cols}/>
         </div>
     </div>
     </>

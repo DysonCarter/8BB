@@ -8,9 +8,10 @@ interface MusicStaffProps {
   ROWS: number;
   song: Array<number>;
   tempo: number;
+  onSongChange: (newSong: Array<number>) => void;
 }
 
-function MusicStaff({COLS, ROWS, song, tempo}: MusicStaffProps) {
+function MusicStaff({COLS, ROWS, song, tempo, onSongChange}: MusicStaffProps) {
   const [activeIndices, setActiveIndices] = useState<number[]>([...song]);
   const [dragColumn, setDragColumn] = useState<number | null>(null);
   const [playingColumn, setPlayingColumn] = useState<number | null>(null);
@@ -100,6 +101,7 @@ function MusicStaff({COLS, ROWS, song, tempo}: MusicStaffProps) {
       const newActive = [...prev];
       if (newActive[dragColumn] !== row) {
         newActive[dragColumn] = row;
+        onSongChange(newActive);
         playNote(row);
       }
       return newActive;
@@ -114,6 +116,7 @@ function MusicStaff({COLS, ROWS, song, tempo}: MusicStaffProps) {
     setActiveIndices((prev) => {
       const newActive = [...prev];
       newActive[column] = row;
+      onSongChange(newActive);
       return newActive;
     });
   
@@ -164,7 +167,7 @@ function MusicStaff({COLS, ROWS, song, tempo}: MusicStaffProps) {
         onPlayingNoteChange={setPlayingColumn}
         tempo={tempo}
       />
-      {console.log(indexArray.join(', '))}
+      {/*console.log(indexArray.join(', '))*/ /*For debugging*/}
     </>
   );
 }
