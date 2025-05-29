@@ -10,20 +10,39 @@ function MainPage() {
     </div>
     <StaffHolder />
     <div className="About">
-        <div className="AboutTitle">About</div>
-        <div className="AboutContent" style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-              <div style={{ flex: 1 }}>
-                <p>8BB is a tool for creating 8-bit music. Inspired by the Animal Crossing series's tune builder, 8BB is an intuitive way to compose your own music. To the right is an image of the original tune builder from Animal Crossing.</p>
-                <p>This little toy is responsible for many kids like myself becoming insterested in music and composition.</p>
-              </div>
-              <img src={animalCrossingImage} alt="Animal Crossing Tune Builder" style={{ width: '300px', height: 'auto' }} />
-        </div>
-        <div className="AboutTitle">How to use</div>
-        <div className="AboutContent">
-            <p>The main part you will be working with is the staff. It is a basic grid where each column represents a note, and each row reprsents a pitch. You can adjust the pitch of each note by clicking or dragging up and down. The bottom row is a rest (so nothing is played). The next row is a slur which will make the previous note ring out.</p>
-            <p>If you find you ran out of space, you can add more columns by clicking the "+" button. You can also add more rows by clicking the "+" if you desire to use higher notes. Finally, you can click clear to reset the notes, or click play to hear your song.</p>
-        </div>
+    <div className="AboutTitle">About</div>
+    <div className="AboutContent" style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+      <div style={{ flex: 1 }}>
+        <p>
+          <strong>8BB</strong> is a tool for creating 8-bit music. Inspired by the tune builder from the 
+          <em> Animal Crossing </em> series, 8BB offers an intuitive and playful way to compose your own melodies.
+        </p>
+        <p>
+          This little musical toy sparked a love for music and composition in many kids—including myself—and 8BB aims to keep that spark alive in a more flexible, digital format.
+        </p>
+      </div>
+      <img
+        src={animalCrossingImage}
+        alt="Animal Crossing Tune Builder"
+        style={{ width: '300px', height: 'auto' }}
+      />
     </div>
+
+    <div className="AboutTitle">How to Use</div>
+    <div className="AboutContent">
+      <p>
+        The main interface is the grid-based staff. Each column represents a beat, and each row corresponds to a pitch. 
+        You can click or drag up and down to change the pitch of each note. The bottom row is a rest (no sound), 
+        and the second-to-last row is a slur, which extends the previous note.
+      </p>
+      <p>
+        You can customize your composition by adding more columns (notes) or rows (pitches) using the + and – buttons. 
+        Press <strong>Clear</strong> to reset the composition, or <strong>Play</strong> to hear your song. 
+        Use the tempo slider to adjust playback speed, and hit <strong>Share</strong> to generate a link to your tune.
+      </p>
+    </div>
+  </div>
+
   </div>
   </>;
 }
