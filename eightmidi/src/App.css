@@ -87,6 +87,8 @@ body::after {
   box-shadow: 0 4px 0 #395C6B;
   transition: all 0.1s ease;
   text-shadow: 2px 2px 0 #395C6B;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .playButton:hover {

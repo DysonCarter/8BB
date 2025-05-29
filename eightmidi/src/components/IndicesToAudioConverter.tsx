@@ -154,15 +154,33 @@ function IndicesToAudioConverter({ indexArray, rows, onPlayingNoteChange, tempo 
     Tone.Transport.start("+0.1");
   };
   
-  
+  const handleStop = () => {
+    synthRef.current?.triggerRelease();
+    setCurrentPlayingColumn(null);
+    onPlayingNoteChange?.(null);
+
+    Tone.Transport.stop();
+    Tone.Transport.position = 0;
+    Tone.Transport.cancel();
+
+    // Dispose old part if any
+    partRef.current?.dispose();
+    partRef.current = null;
+  }
 
   return (
-    <div className="playButtonContainer">
+    <div className="playButtonContainer" style={{ display: 'flex'}}>
       <button 
         className="playButton"
         onClick={handlePlay}
       >
         Play
+      </button>
+      <button 
+        className="playButton"
+        onClick={handleStop}
+      >
+        Stop
       </button>
     </div>
   );
