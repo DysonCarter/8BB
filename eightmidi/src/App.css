@@ -267,3 +267,30 @@ body::after {
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+
+.shareButton {
+  width: 50px;
+  height: 40px;
+  font-size: 15px;
+  font-family: 'Fredoka', sans-serif;
+  border-radius: 5px;
+  background-color: #70bf77;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 0 #396b45;
+  transition: all 0.1s ease;
+}
+
+.shareButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 #396b45;
+}
+
+.shareButton:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #396b45;
+}

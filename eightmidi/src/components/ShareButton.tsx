@@ -1,3 +1,5 @@
+import { FaShare } from 'react-icons/fa';
+
 interface ShareButtonProps {
     song: Array<number>;
     tempo: number;
@@ -31,7 +33,7 @@ function ShareButton({song, tempo, rows, cols}: ShareButtonProps) {
         }
     }
 
-    return <button className="shareButton" onClick={handleShare}>Share</button>
+    return <button className="shareButton" onClick={handleShare}><FaShare /></button>
 }
 
 export default ShareButton;
