@@ -60,19 +60,26 @@ function StaffHolder() {
     <div className="staffHolder">
     <MusicStaff COLS={cols} ROWS={rows} song={song} tempo={tempo} onSongChange={setNewSong} />
     </div>
-    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '10px' }}>
+    <div style={{ 
+        display: 'flex', 
+        gap: '10px', 
+        justifyContent: 'center', 
+        marginTop: '10px',
+        flexWrap: 'wrap',
+        padding: '0 10px'
+    }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <span style={{ fontFamily: 'Fredoka, sans-serif' }}>Tempo: {tempo.toFixed(1)}</span>
+            <span style={{ fontFamily: 'Fredoka, sans-serif', whiteSpace: 'nowrap' }}>Tempo: {tempo.toFixed(1)}</span>
             <input className="inputSlider" type="range" min=".1" max="3" step="0.1" value={tempo} onChange={(e) => setTempo(parseFloat(e.target.value))} />
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <button className="inputRC" onClick={() => changeColumns(-1)}>-</button>
-            <span style={{ fontFamily: 'Fredoka, sans-serif' }}>Cols: {cols}</span>
+            <span style={{ fontFamily: 'Fredoka, sans-serif', whiteSpace: 'nowrap' }}>Cols: {cols}</span>
             <button className="inputRC" onClick={() => changeColumns(1)}>+</button>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <button className="inputRC" onClick={() => changeRows(-1)}>-</button>
-            <span style={{ fontFamily: 'Fredoka, sans-serif' }}>Rows: {rows}</span>
+            <span style={{ fontFamily: 'Fredoka, sans-serif', whiteSpace: 'nowrap' }}>Rows: {rows}</span>
             <button className="inputRC" onClick={() => changeRows(1)}>+</button>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>

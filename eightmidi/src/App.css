@@ -60,10 +60,11 @@ body::after {
   -webkit-scrollbar-width: none;
   overscroll-behavior: none;
   -ms-overflow-style: none;
-  width: 75vw;
-  border: 30px solid #bbb482;
+  width: 95vw;
+  max-width: 1200px;
+  border: 20px solid #bbb482;
   background-color: #E6E1C5;
-  border-radius: 30px;
+  border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 
   /* Hide scrollbar for Safari */
@@ -293,4 +294,132 @@ body::after {
 .shareButton:active {
   transform: translateY(2px);
   box-shadow: 0 1px 0 #396b45;
+}
+
+@media (max-width: 768px) {
+  .staffHolder {
+    width: 90vw;
+    border-width: 15px;
+  }
+
+  .mainPageHeader {
+    height: 80px;
+    font-size: 40px;
+  }
+
+  .mainPageHeaderSubtitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .About {
+    width: 90vw;
+    min-width: unset;
+    margin: 20px auto;
+  }
+
+  .AboutContent {
+    font-size: 14px;
+  }
+
+  .AboutContent img {
+    width: 200px !important;
+    height: auto !important;
+  }
+
+  .playButton {
+    width: 80px;
+    height: 40px;
+    font-size: 16px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .inputRC {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+  }
+
+  .clearButton {
+    width: 90px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .shareButton {
+    width: 45px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .inputSlider {
+    width: 120px;
+  }
+
+  .noteContainer {
+    width: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .staffHolder {
+    width: 95vw;
+    border-width: 10px;
+  }
+
+  .mainPageHeader {
+    height: 60px;
+    font-size: 32px;
+  }
+
+  .mainPageHeaderSubtitle {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .About {
+    width: 95vw;
+    padding: 15px;
+  }
+
+  .AboutContent {
+    font-size: 13px;
+  }
+
+  .AboutContent img {
+    width: 150px !important;
+  }
+
+  .playButton {
+    width: 70px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .inputRC {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+
+  .clearButton {
+    width: 80px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  .shareButton {
+    width: 40px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  .inputSlider {
+    width: 100px;
+  }
+
+  .noteContainer {
+    width: 30px;
+  }
 }
