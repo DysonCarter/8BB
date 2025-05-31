@@ -39,6 +39,13 @@ function StaffHolder() {
         const newRows = rows + delta;
         const clampedValue = Math.min(Math.max(1, newRows), 32);
         setRows(clampedValue);
+        
+        // Update song state to reflect row changes
+        if (delta > 0) {
+            setSong(prevSong => prevSong.map(index => index + 1));
+        } else if (delta < 0) {
+            setSong(prevSong => prevSong.map(index => Math.max(index - 1, 0)));
+        }
     }
 
     const clearSong = () => {
