@@ -6,6 +6,10 @@ A web-based 8-bit music creation and editing tool built with React, TypeScript, 
 
 8BB (8-Bit Builder) is a modern web application that allows users to create, edit, and export 8-bit tunes. Inspired by the tune builder from the Animal Crossing series, 8BB offers an intuitive and playful way to compose your own melodies. This little musical toy sparked a love for music and composition in many kids, and 8BB aims to keep that spark alive in a more flexible, digital format.
 
+## Example Songs:
+[Undertale](https://www.8bb.online/?data=eyJ0ZW1wbyI6MS41LCJyb3dzIjoxNSwiY29scyI6MTI3LCJzb25nIjpbMTIsMTMsMTMsMTMsNSwxMywxMywxMyw4LDEzLDEzLDEzLDEzLDEzLDEzLDEzLDksMTMsMTMsMTMsNSwxMywxMywxMywxMiwxMywxMywxMywxMywxMywxMywxNCwxMiwxMywxMywxMyw5LDEzLDEzLDEzLDUsMTMsMTMsMTMsNCwxMywxMywxMyw1LDEzLDEzLDEzLDgsMTMsMTMsMTMsOSwxMywxMywxMywxMywxMywxMywxMywxMiwxMywxMywxMyw1LDE0LDcsMTQsOCwxNCw5LDE0LDEwLDksMTQsOCwxMywxMywxMywzLDEzLDQsNiw1LDEzLDEzLDEzLDEzLDEzLDEzLDEzLDExLDEzLDEzLDEzLDUsMTQsNywxNCw4LDE0LDksMTQsMTAsOSwxNCwxMCwxMywxMywxMyw4LDEzLDEzLDE0LDgsMTQsOSwxNCwxMCwxNCw5LDE0LDE0LDE0LDE0LDE0LDE0LDE0LDE0LDE0XX0%3D)
+[Super Mario World](https://www.8bb.online/?data=eyJ0ZW1wbyI6MSwicm93cyI6MTYsImNvbHMiOjUwLCJzb25nIjpbMTEsMTQsOSwxNCw4LDYsMTQsMTQsMTUsMTUsOCw5LDExLDEzLDEyLDExLDEyLDExLDEyLDE0LDEzLDE1LDEyLDEyLDEyLDgsMTIsNSwxNSwxNSwxMiwxMSwxMiwxMSwxMiwxMSwxNSwxNSw4LDksOCw5LDgsMTIsMTQsMTEsMTQsMTQsMTUsMTVdfQ%3D%3D)
+
 ## Features
 
 - Grid-based staff interface for easy composition
