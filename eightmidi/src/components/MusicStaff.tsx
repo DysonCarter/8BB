@@ -152,7 +152,8 @@ function MusicStaff({COLS, ROWS, song, tempo, onSongChange}: MusicStaffProps) {
         className="musicGrid"
         style={{
           gridTemplateColumns: `repeat(${COLS}, 1fr)`,
-          gridTemplateRows: `repeat(${ROWS}, 1fr)`
+          gridTemplateRows: `repeat(${ROWS}, 1fr)`,
+          minWidth: `${COLS * 40}px`
         }}
         ref={gridRef}
         onMouseMove={handleMouseMove}
